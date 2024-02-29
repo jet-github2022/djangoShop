@@ -1,0 +1,44 @@
+{% extends "store/base.html" %}
+{% load humanize %}
+{% block title %}{{request.user.username}} Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="mt-3">Detail Information</h3>
+            <p><span class="fw-bold">Name:</span> {{customer.full_name}}</p>
+            <p><span class="fw-bold">Username:</span> {{customer.user.username}}</p>
+            <p><span class="fw-bold">Email:</span> {{customer.user.email}}</p>
+            <p><span class="fw-bold">Address:</span> {{customer.address}}</p>
+            <p><span class="fw-bold">Joined_on:</span> {{customer.joined_on}}</p>
+        </div>
+        <div class="col-md-8">
+            <h3 class="mt-3">Previous Order</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Order ID</th>
+                        <th>Amount</th>
+                        <th>Ordered</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><a href="{% url 'store:orderdetail' order.pk %} ">#order_{{order.id}}</a></td>
+                        <td>{{order.total|intcomma}}</td>
+                        <td>{{order.created_at|timesince}} ago</td>
+                        <td>{{order.order_status}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

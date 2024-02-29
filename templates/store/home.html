@@ -1,0 +1,57 @@
+{% extends "store/base.html" %}
+{% load humanize %}
+{% block title %}Home{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center text-dark mt-4">Welcome to jStore</h1>
+    <div class="row mt-4">
+        {% for product in product_list %}
+        <div class="col-md-3">
+           <div class="m-4">
+               <h3><a href="{% url 'store:product-detail' product.slug %}" class="text-decoration-none">{{product.title}}</a></h3>
+            <img src="{{product.image.url}}" alt="" class="img-fluid" style="height: 2500; object-fit:contain;">
+            <p class="fs-5">Price: ₦{{product.selling_price|intcomma}}</p>
+            <a href="{% url 'store:add-cart' product.id %}" class="btn btn-primary">Add To Cart</a>
+
+           </div>
+        </div>
+        {% endfor %}
+
+    <nav aria-label="...">
+          <ul class="pagination">
+              {% if product_list.has_previous %}
+              <li class="page-item">
+                 <a class="page-link" href="?page={{ product_list.previous_page_number}}" >Previous</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href=""  aria-disabled="true">Previous</a>
+              </li>
+              {% endif %}
+
+              {% for i in product_list.paginator.page_range %}
+              {% if i == product_list.number %}
+              <li class="page-item active"><a class="page-link" href="" >{{i}}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if product_list.has_next %}
+               <li class="page-item">
+                 <a class="page-link" href="?page={{ product_list.next_page_number }}">Next</a>
+               </li>
+              {% else %}
+              <li class="page-item disabled">
+                  <a class="page-link" href="" tabindex="-1" aria-disabled="true">Next</a>
+              </li>
+              {% endif %}
+          </ul>
+    </nav>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "store/base.html" %}
+{% load humanize %}
+{% block title %}Order Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="col-md-8">
+        <h3>ORDER DETAILS</h3>
+        <p><span class="fw-bold">Order ID: </span> #ORDER_{{order_obj.id}}</p>
+        <p><span class="fw-bold">Order Status: </span>{{order_obj.order_status}}</p>
+        <p><span class="fw-bold">Ordered On: </span>{{order_obj.created_at}} ({{order_obj.created_at|timesince}} ago)</p>
+        <p><span class="fw-bold">Customer Information: </span> By {{order_obj.ordered_by}}, {{order_obj.mobile}} </p>
+        <p><span class="fw-bold">Shipping Address: </span> {{order_obj.shipping_address}}, ({{order_obj.email}}) </p>
+        <h4>ORDER ITEMS</h4>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <td>SN</td>
+                        <td>Item</td>
+                        <td>Rate</td>
+                        <td>Quantity</td>
+                        <td>Subtotal</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cartpro in order_obj.cart.cartproduct_set.all %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><a target="_blank" href="{% url 'store:product-detail' cartpro.product.slug %}">{{cartpro.product.title}} ({{cartpro.product.id}})</a></td>
+                        <td>{{cartpro.rate|intcomma}}</td>
+                        <td>{{cartpro.quantity}}</td>
+                        <td>{{cartpro.subtotal|intcomma}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <th colspan="4" class="text-right">Total: </th>
+                        <th>₦{{order_obj.total|intcomma}}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

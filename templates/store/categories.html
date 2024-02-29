@@ -1,0 +1,25 @@
+{% extends "store/base.html" %}
+{% load humanize %}
+{% block title %}All Products{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="mt-4">All Products</h3>
+    {% for category in categories %}
+    <h4>{{category.title}}</h4>
+    <div class="row">
+         {% for product in category.product_set.all %}
+        <div class="col-md-3">
+           <div class="m-4">
+               <h3><a href="{% url 'store:product-detail' product.slug %}" class="text-decoration-none">{{product.title}}</a></h3>
+            <img src="{{product.image.url}}" alt="" class="img-fluid" style="height: 2500; object-fit: cover;">
+            <p class="fs-5">Price: ₦{{product.selling_price|intcomma}}</p>
+            <a href="{% url 'store:add-cart' product.id %}" class="btn btn-primary mt-3">Add To Cart</a>
+           </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

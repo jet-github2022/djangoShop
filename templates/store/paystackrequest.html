@@ -1,0 +1,42 @@
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+<!--     <script src="https://js.paystack.co/v1/inline.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container mt-4">-->
+<!--    <form id="paymentForm">-->
+<!--        <h3>Your order amount is NGN {{order.total}}</h3>-->
+<!--        <button  type="submit" onclick="payWithPaystack()" class="btn btn-success">Pay with Paystack</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    const paymentForm = document.getElementById('paymentForm');-->
+<!--        paymentForm.addEventListener("submit", payWithPaystack, false);-->
+
+<!--        function payWithPaystack(e) {-->
+<!--          e.preventDefault();-->
+
+<!--          let handler = PaystackPop.setup({-->
+<!--            key: 'pk_live_0904285f5fd9edf076300a8ea38dc7378d182f90', // Replace with your public key-->
+<!--            email: {{request.user.email}},-->
+<!--            amount: {{order.total}} * 100,-->
+<!--            ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you-->
+<!--            // label: "Optional string that replaces customer email"-->
+<!--            onClose: function(){-->
+<!--              alert('Window closed.');-->
+<!--            },-->
+<!--            callback: function(response){-->
+<!--              let message = 'Payment complete! Reference: ' + response.reference;-->
+<!--              alert(message);-->
+<!--            }-->
+<!--          });-->
+
+<!--          handler.openIframe();-->
+<!--        }-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
